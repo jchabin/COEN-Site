@@ -1,0 +1,466 @@
+<title>Johnny Chabin</title>
+<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Shrikhand&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+<style>
+	*{
+		margin: 0;
+		padding: 0;
+		overflow-x: hidden;
+	/* 	overflow: hidden; */
+	}
+	body{
+		background: black;
+	}
+	#bg{
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 100vh;
+		width: 100vw;
+		background-position: center;
+		background-size: cover;
+		transform: scale(1.05);
+		transition: transform .1s;
+	}
+	#title{
+		position: fixed;
+		top: 0;
+		left: 0;
+		background: #333;
+		color: #EEE;
+		font: 10vmin "Bebas Neue";
+		padding: 3vmin;
+		padding-right: 6vmin;
+		clip-path: polygon(0 100%, 0 0, 100% 0, calc(100% - 6vmin) 100%);
+		display: inline-block;
+		cursor: pointer;
+		z-index: 1;
+		transition: font .2s, padding .2s;
+	}
+	#title.small{
+		padding-top: 0;
+		padding-bottom: 0;
+		font-size: 6vmin;
+	}
+	#body{
+		background: #111;
+		position: absolute;
+		top: 100vh;
+		left: 0;
+		width: 100vw;
+		color: #EEE;
+		font-family: "Roboto";
+		padding: 3vmin;
+		font-size: 3vmin;
+		box-sizing: border-box;
+		overflow: hidden;
+	}
+	h1{
+		font-size: 10vmin;
+	}
+	#arrow{
+		font-family: "Roboto";
+		font-size: 20vmin;
+		color: white;
+		position: absolute;
+		top: 75vh;
+	/* 	box-sizing: border-box; */
+		left: 0;
+		width: 100vw;
+		text-align: center;
+		text-shadow: 0 -.5vmin rgba(240, 240, 240, 0.8),
+			0 -1vmin rgba(240, 240, 240, 0.6),
+			0 -1.5vmin rgba(240, 240, 240, 0.4),
+			0 -2vmin rgba(240, 240, 240, 0.2);
+		
+		cursor: pointer;
+		transition: transform .1s;
+	}
+	#grad{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background: linear-gradient(transparent, transparent, #111);
+	}
+	.button{
+		text-align: left;
+		background: #333;
+		height: 30vmin;
+		width: 45vmin;
+		margin: 1vmin;
+		border-radius: 1vmin;
+		cursor: pointer;
+		display: inline-block;
+		transition: transform .2s;
+		background-size: cover;
+		background-position: center;
+	}
+	.button:hover{
+		transform: scale(1.05);
+	}
+	.button._0{
+		background-image: url("https://jchabin.github.io/ThingHosting/preview0.png");
+	}
+	.button._1{
+		background-image: url("https://jchabin.github.io/ThingHosting/preview1.png");
+	}
+	.button._2{
+		background-image: url("https://jchabin.github.io/ThingHosting/preview2.png");
+	}
+	.button._3{
+		background-image: url("https://jchabin.github.io/ThingHosting/preview3.png");
+	}
+	#reload{
+		position: absolute;
+		top: 3vmin;
+		right: 3vmin;
+		background: #eb4034;
+		color: #EEE;
+		transform: rotate(120deg);
+		border-radius: 100%;
+		height: 8vmin;
+		width: 8vmin;
+		text-align: center;
+		line-height: 8vmin;
+		font-size: 5vmin;
+		cursor: pointer;
+		transition: transform .2s;
+	}
+	#reload:hover{
+		transform: rotate(180deg);
+	}
+	#labels{
+		width: 100%;
+		display: flex;
+	}
+	.label{
+		flex-grow: 1;
+		flex-shrink: 1;
+		text-align: center;
+		cursor: pointer;
+		padding-bottom: 1vmin;
+		font-size: 3vmin;
+	}
+	#hl{
+		height: .5vmin;
+		width: 0;
+		background: #eb4034;
+		transition: margin .2s, width .2s;
+	}
+	#slidec{
+	/* 	position: relative; */
+		overflow-y: visible;
+		height: 100vh;
+		transition: height .3s;
+	}
+	.slide{
+		position: absolute;
+		transition: left .3s;
+		width: 100vw;
+		box-sizing: border-box;
+		padding-top: 4vmin;
+	}
+	.margin{
+		padding-left: 20vw;
+		padding-right: 20vw;
+	}
+	.hbg{
+		background: rgba(0, 0, 0, 0.8);
+		padding: 3vmin;
+		line-height: 1.5vmin;
+	}
+	.small{
+		font-size: 1.3vmin;
+		line-height: 1vmin;
+	}
+	#pdf{
+		width: 100%;
+	}
+	#pdf2{
+		width: 46%;
+		margin-left: 3vw;
+		float: left;
+	}
+	#pdf3{
+		width: 46%;
+		margin-right: 3vw;
+		float: right
+	}
+</style>
+
+<div id="bg"></div>
+<div id="title">JOHNNY CHABIN</div>
+<div id="grad"></div>
+<div id="arrow" onclick="arrowScroll()">&#8681;</div>
+<div id="reload" onclick="opS()">&#8635;</div>
+<div id="body">
+	<div id="labels">
+		<div class="label" onclick="sel(0)">about me</div>
+		<div class="label" onclick="sel(1)">being an engineer</div>
+		<div class="label" onclick="sel(2)">my resume</div>
+		<div class="label" onclick="sel(3)">goals</div>
+		<div class="label" onclick="sel(4)">odyssey</div>
+		<div class="label" onclick="sel(5)">meta-reflections</div>
+	</div>
+	<div id="hl"></div>
+	<div id="slidec">
+		<div class="slide">
+			<div class="margin">
+				<br/>
+				Hi, I'm Johnny, and I am a Computer Science major. I spend most of my free time playing video games, playing the piano, or working on small personal
+				projects. This is my first semester at Boulder, and my second semester in college (I took a semester at ACC to save money). I'm using transfer credits
+				from ACC and CU Denver, as well as AP credits from high school, to try and graduate by 2022.
+				<br/>
+				<br/>
+				Most of my projects (at least the ones that came out well) are visual art that I created using Shadertoy, with a fractal engine and 3D pathtracer that
+				I wrote myself. I used some of those as the background for this website. Click the red arrow at the top to see a new image!
+				<br/>
+				<br/>
+				I've also made other projects, here's some interesting web apps that I've published:
+				<br/>
+				<br/>
+			</div>
+			<center>
+				<div class="button _0" onclick="window.open('https://jchabin.github.io/lizards')"><div class="hbg">Invisible Lizard Hunter</div></div>
+				<div class="button _1" onclick="window.open('https://jchabin.github.io/cars')"><div class="hbg">Online Racing Game</div></div>
+				<br/>
+				<div class="button _2" onclick="window.open('https://jchabin.github.io/invaders')"><div class="hbg">Space Invaders</div></div>
+				<div class="button _3" onclick="window.open('https://jchabin.github.io/asteroids')"><div class="hbg">Asteroids-like game (WIP)</div></div>
+			</center>
+		</div>
+		<div class="slide">
+			<div class="margin">
+				<br/>
+				To me, being an engineer is about problem-solving skills and how they relate to math and science. A large aspect of this is planning and contruction
+				of solutions, whether these solutions are physical, virtual, or just conceptual. The responsibility that comes with the title of Engineer is a
+				guarantee that my work is complete to the extent of my abilities, and in cases where my projects would be relied on for serious applications, it
+				means that my work will do everything it should.
+				<br/>
+				<br/>
+				I've had an interest in the problem-solving aspects of engineering for a long time, which is most of the reason I'm majoring in an engineering field.
+			</div>
+		</div>
+		<div class="slide">
+			<div class="margin">
+				<br/>
+				<canvas id="pdf"></canvas>
+			</div>
+		</div>
+		<div class="slide">
+			<div class="margin">
+				<br/>
+				Goal 1: I would like to graduate in 2022. This means taking classes as early and quickly as possible, and avoiding unecessary electives.
+				<br/>
+				<br/>
+				Goal 2: I would like to make more friends in Boulder. I don't know very many people in Boulder, and assuming my classes will be in-person in the Fall,
+				I should be able to meet more people.
+				<br/>
+				<br/>
+				Goal 3: I would like to maintain my mental health during my time in college. What I'm trying to do is stressful, so I will prioritize my mental health
+				above my other goals.
+			</div>
+		</div>
+		<div class="slide">
+			<br/>
+			<canvas id="pdf2"></canvas>
+			<canvas id="pdf3"></canvas>
+			<div class="margin">
+				<br/>
+				I have the same goals now as I did when I wrote this, but I have made some progress. For my first goal specifically, I have talked to my advisor
+				several times and made a plan for the next few semesters (including summers), I filed the petition to enter the Senior Capstone early, and I
+				have successfully registered for that class. I have made less progress to my second goal. I've tried to talk to people more often in class, but
+				I haven't talked to anyone outside of class.
+				<br/>
+				<br/>
+				For my third goal, I think I have been following it consistenty. I try to not overwork myself, I prioritize my mental health, and I take time to
+				relax often.
+			</div>
+		</div>
+		<div class="slide">
+			<div class="margin">
+				<br/>
+				Meta-Reflection 1
+				<br/>
+				<br/>
+				I think the most important concept I took from this class was the Energy Diagram. I haven't actually broken that down into a written list before,
+				and it was interesting to see it all of the information at once. At the time I wrote it, I wasn't able to gain much from the diagram I created,
+				but in retrospect, it showed where I was making things worse for myself, and I've been able to improve things slightly in those areas (just by
+				reoganizing my schedule). These concepts also have applications to the rest of engineering; in a more general interpretation, being able to detail
+				what is and isn't working is essential to the engineering process, and anything where trial-and-error is a step. I think a takeaway from the energy
+				diagram it showed me to stop doing trying things that don't work. Sometimes I have to change something for things to get better.
+				<br/>
+				<br/>
+				<br/>
+				Meta-Reflection 2
+				<br/>
+				<br/>
+				I think the prototyping was helpful in order to make goals more digestable and approachable, and to let me consider completely new ideas that
+				aren't limited by whether I would actually do it. Often I would refuse to really think through a plan if I knew I wasn't going to do it, but by
+				considering it anyway, I can gain a greater perspective on the issue. Sometimes the end result of a plan I didn't consider is still signficiant,
+				even if the steps before aren't. The strategy is also helpful for ideas that I am seriously considering; by breaking down into a detailed,
+				step-by-step plan, it makes it much easier to begin moving toward that goal. I use this specifically for homework a lot, by breaking it into small
+				steps, I feel more able to do the first part, instead of attempting so much at once.
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	var ImageList = [];
+	var ImageIndex = 0;
+	var bg = document.getElementById("bg");
+	bg.depth = 1.05;
+	var arrow = document.getElementById("arrow");
+	arrow.depth = 1.01;
+	var grad = document.getElementById("grad");
+	grad.depth = 1.01;
+	var depthArr = [bg, arrow];
+	var x = new XMLHttpRequest();
+	x.onload = function(){
+		var r = JSON.parse(x.response).tree;
+		if(r){
+			while(r.length > 0){
+				var n = Math.floor(Math.random() * r.length);
+				if(!r[n].path.includes(".png")){
+					r.splice(n, 1);
+					continue;
+				}
+				var i = new Image();
+				i.src = "https://jchabin.github.io/about/" + r.splice(n, 1)[0].path;
+				ImageList.push(i);
+			}
+			start();
+		}
+	}
+	
+	function opS(){
+		x.open("GET", "https://api.github.com/repos/jchabin/about/git/trees/main");
+		x.send();
+	}
+	opS();
+	
+	function start(){
+		bg.style.backgroundImage = "url(\"" + ImageList[ImageIndex++].src + "\")";
+		if(ImageIndex >= ImageList.length)
+			ImageIndex = 0;
+	}
+	
+	window.onmousemove = function(e){
+		var uv = [e.clientX / window.innerWidth, e.clientY / window.innerHeight];
+		for(var i = 0; i < depthArr.length; i++)
+			depthArr[i].style.transform = "translate("
+				+ (uv[0] - 0.5) * -(depthArr[i].depth - 1) * 100 + "vw, "
+				+ (uv[1] - 0.5) * -(depthArr[i].depth - 1) * 100
+				+ "vh) scale(" + depthArr[i].depth + ")";
+	}
+	
+	var selection = 0;
+	function sel(n){
+		selection = n;
+		var c = document.getElementsByClassName("label")[n];
+		var hl = document.getElementById("hl");
+		var cr = c.getBoundingClientRect();
+		hl.style.marginLeft = cr.left - document.getElementById("labels").getBoundingClientRect().left + "px";
+		hl.style.width = cr.width + "px";
+		
+		var s = document.getElementsByClassName("slide");
+		document.getElementById("slidec").style.height = s[n].clientHeight + "px";
+		for(var i = 0; i < s.length; i++){
+			var nl = 100 * Math.sign(i - n), cl = parseInt(s[i].style.left), m = nl * cl;
+			if(!isNaN(m) && m < 0){
+				s[i].style.transition = "none";
+				setTimeout(function(a){
+					a.style.transition = "";
+				}, 0, s[i]);
+			}
+			s[i].style.left = nl + "vw";
+		}
+	}
+	
+	function arrowScroll(){
+		console.log("AAA");
+		var sY = window.scrollY;
+		var tY = window.innerHeight - 215;
+		
+		var timer = 0;
+		
+		var lt = Date.now();
+		function uScroll(){
+			var t = Date.now();
+			var dt = t - lt;
+			lt = t;
+			
+			timer += dt;
+			
+			var x = timer / 300;
+			if(x <= 1)
+				requestAnimationFrame(uScroll);
+			x = 3 * x * x - 2 * x * x * x;
+			window.scroll(0, sY * (1 - x) + tY * x);
+		}
+		
+		uScroll();
+	}
+	
+	
+	
+	var lw = 0, lh = 0;
+	function checkResize(){
+		if(lw != window.innerWidth || lh != window.innerHeight){
+			lw = window.innerWidth;
+			lh = window.innerHeight;
+			sel(selection);
+		}
+		document.getElementById("title").className = (window.scrollY >= window.innerHeight - 230) ? "small" : "";
+		requestAnimationFrame(checkResize);
+	}
+	checkResize();
+	
+	var cv = document.getElementById("pdf");
+	pdfjsLib.GlobalWorkerOptions.workerSrc = "//mozilla.github.io/pdf.js/build/pdf.worker.js";
+	pdfjsLib.getDocument("https://jchabin.github.io/ThingHosting/COEN_Resume.pdf").promise.then(function(e){
+		e.getPage(1).then(function(p){
+			var vp = p.getViewport({scale: 5});
+			console.log(p, vp);
+			cv.height = vp.height;
+			cv.width = vp.width;
+			var ctx = cv.getContext("2d");
+			p.render({
+				canvasContext: ctx,
+				viewport: vp
+			});
+		});
+	});
+	
+	var cv2 = document.getElementById("pdf2");
+	var cv3 = document.getElementById("pdf3");
+	pdfjsLib.getDocument("https://jchabin.github.io/ThingHosting/major_discussion.pdf").promise.then(function(e){
+		e.getPage(1).then(function(p){
+			var vp = p.getViewport({scale: 5});
+			console.log(p, vp);
+			cv2.height = vp.height;
+			cv2.width = vp.width;
+			var ctx = cv2.getContext("2d");
+			p.render({
+				canvasContext: ctx,
+				viewport: vp
+			});
+		});
+		e.getPage(2).then(function(p){
+			var vp = p.getViewport({scale: 5});
+			console.log(p, vp);
+			cv3.height = vp.height;
+			cv3.width = vp.width;
+			var ctx = cv3.getContext("2d");
+			p.render({
+				canvasContext: ctx,
+				viewport: vp
+			});
+		});
+	});
+</script>
